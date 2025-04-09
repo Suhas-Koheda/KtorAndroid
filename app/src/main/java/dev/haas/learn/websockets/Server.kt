@@ -7,6 +7,9 @@ import io.ktor.http.HttpMethod
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.request.uri
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
@@ -31,6 +34,10 @@ fun startWebSocketServer(){
                     outgoing.send(frame)
                 }
             }
+            get("/") {
+                val uri = call.request.uri
+                call.respondText { uri }
+            }
         }
     }.start(wait = true)
 }
@@ -41,7 +48,7 @@ suspend fun hearSocket(ip: String) {
             method = HttpMethod.Get,
             host = ip,
             port = 1818,
-            path = "/"
+            path = "/hear"
         ) {
             for (frame in incoming) {
                 frame as? Frame.Text ?: continue

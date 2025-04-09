@@ -8,6 +8,13 @@ android {
     namespace = "dev.haas.learn"
     compileSdk = 35
 
+    packagingOptions {
+        resources {
+            pickFirsts.add("META-INF/INDEX.LIST")
+            pickFirsts.add("META-INF/io.netty.versions.properties")
+        }
+    }
+
     defaultConfig {
         applicationId = "dev.haas.learn"
         minSdk = 24
@@ -60,5 +67,6 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.client.java)
-    implementation(libs.ktor.client.websockets)
+    implementation(libs.ktor.network)
+
 }

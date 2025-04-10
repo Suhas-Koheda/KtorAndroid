@@ -62,3 +62,6 @@ fun runHearSocket(ip: String) = runBlocking {
     hearSocket(ip)
 }
 
+fun main() {
+    startWebSocketServer()
+}

@@ -14,10 +14,11 @@ object IpBroadcaster {
     fun getLocalIpAddress(): String {
         return NetworkInterface.getNetworkInterfaces()
             .asSequence()
+            .filter { it.name == "wlp0s20f3" }
             .flatMap { it.inetAddresses.asSequence() }
             .filter {
                 !it.isLoopbackAddress &&
-                        it.hostAddress?.contains('.') == true // IPv4 only
+                        it.hostAddress?.contains('.') == true
             }
             .find { it.isSiteLocalAddress } // Prefer private IPs
             ?.hostAddress
@@ -27,33 +28,30 @@ object IpBroadcaster {
     // Broadcast the IP address to the local network
     fun broadcastIp() = runBlocking {
         val selectorManager = SelectorManager(Dispatchers.IO)
-        val socket = aSocket(selectorManager).udp().bind(
-            localAddress = InetAddress.getByName("0.0.0.0"),
-            port = 0 // Let system choose random port
-        )
+        aSocket(selectorManager).udp()
 
         try {
-            socket.setBroadcast(true) // Enable broadcast
+            // socket.setBroadcast(true) // Enable broadcast
 
             val message = "IP_ADDRESS:${getLocalIpAddress()}"
-            val broadcastPacket = DatagramPacket(
+            DatagramPacket(
                 message.toByteArray(),
                 message.length,
                 InetAddress.getByName("255.255.255.255"), // Broadcast address
                 9002 // Destination port
             )
 
-            socket.send(broadcastPacket)
+            //socket.send(broadcastPacket)
             println("Broadcast sent: $message")
         } catch (e: Exception) {
             println("Broadcast failed: ${e.message}")
         } finally {
-            socket.close()
+            //  socket.close()
         }
     }
 }
 
 // Usage example
 fun main() {
-    IpBroadcaster.broadcastIp()
+    println(IpBroadcaster.getLocalIpAddress())
 }

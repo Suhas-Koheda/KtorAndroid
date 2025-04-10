@@ -1,5 +1,6 @@
 package dev.haas.learn.ipfinder
 
+import android.net.nsd.NsdServiceInfo
 import io.ktor.network.selector.SelectorManager
 import io.ktor.network.sockets.aSocket
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ object IpBroadcaster {
     fun getLocalIpAddress(): String {
         return NetworkInterface.getNetworkInterfaces()
             .asSequence()
-            .filter { it.name == "wlp0s20f3" }
+            .filter { it.name == "wlp0s20f3" || it.name == "wlan0" }
             .flatMap { it.inetAddresses.asSequence() }
             .filter {
                 !it.isLoopbackAddress &&
@@ -54,4 +55,13 @@ object IpBroadcaster {
 // Usage example
 fun main() {
     println(IpBroadcaster.getLocalIpAddress())
+}
+
+object nsdimplement {
+    fun service() = NsdServiceInfo().apply {
+        serviceName = "Ipbroadcast"
+        serviceType = "_ipbroadcst.tcp"
+        port = 1820
+    }
+
 }

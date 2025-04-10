@@ -43,25 +43,38 @@ fun startWebSocketServer(){
 }
 
 suspend fun hearSocket(ip: String) {
-    HttpClient(Java).use { client ->
+    println("into function")
+    HttpClient(Java) {
+        install(io.ktor.client.plugins.websocket.WebSockets) { // Install WebSockets plugin
+            maxFrameSize = 10000
+        }
+    }.use { client ->
+        println("into client")
         client.webSocket(
             method = HttpMethod.Get,
             host = ip,
             port = 1818,
             path = "/hear"
         ) {
+            println("into socket")
+            send(Frame.Text("Hello from client!")) // Send initial message
             for (frame in incoming) {
-                frame as? Frame.Text ?: continue
-                println(frame.readText())
+                when (frame) {
+                    is Frame.Text -> println("Received: ${frame.readText()}")
+                    is Frame.Close -> println("Connection closed")
+                    else -> println("Received frame: $frame")
+                }
             }
         }
     }
 }
 
 fun runHearSocket(ip: String) = runBlocking {
+    println("here")
     hearSocket(ip)
 }
 
 fun main() {
-    startWebSocketServer()
+    //startWebSocketServer()
+    runHearSocket("172.20.161.135")
 }

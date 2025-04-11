@@ -14,7 +14,6 @@ ktorServerWebsockets = "3.1.2"
 lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
-richeditorCompose = "1.0.0-rc12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,7 +36,6 @@ ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktorNetwork" }
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorServerCore" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorServerNetty" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktorServerWebsockets" }
-richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

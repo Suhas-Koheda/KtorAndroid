@@ -68,6 +68,5 @@ dependencies {
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.client.java)
     implementation(libs.ktor.network)
-    implementation(libs.richeditor.compose)
 
 }

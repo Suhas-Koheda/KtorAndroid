@@ -50,7 +50,6 @@ class MainActivity : ComponentActivity() {
                             Text("Start WebServer")
                         }
                         Text(text = IpBroadcaster.getLocalIpAddress())
-                        Button(onClick = { TextEditor() }) { }
                     }
                 }
             }

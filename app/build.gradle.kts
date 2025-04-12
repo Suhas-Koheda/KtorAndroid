@@ -69,5 +69,6 @@ dependencies {
     implementation(libs.ktor.client.java)
     implementation(libs.ktor.network)
     implementation(libs.richeditor.compose)
+    implementation(libs.voyager.navigator)
 
 }

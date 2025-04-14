@@ -8,6 +8,8 @@ espressoCore = "3.6.1"
 ktorClientJava = "3.1.0"
 ktorClientWebsockets = "1.1.4"
 ktorNetwork = "3.1.2"
+ktorNetworkTls = "3.1.1"
+ktorNetworkVersion = "3.1.1"
 ktorServerCore = "3.1.2"
 ktorServerNetty = "3.1.2"
 ktorServerWebsockets = "3.1.2"
@@ -35,6 +37,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktorClientJava" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktorClientWebsockets" }
 ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktorNetwork" }
+ktor-network-tls = { module = "io.ktor:ktor-network-tls", version.ref = "ktorNetworkTls" }
+ktor-network-v311 = { module = "io.ktor:ktor-network", version.ref = "ktorNetworkVersion" }
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorServerCore" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorServerNetty" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktorServerWebsockets" }

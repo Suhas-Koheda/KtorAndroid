@@ -70,5 +70,7 @@ dependencies {
     implementation(libs.ktor.network)
     implementation(libs.richeditor.compose)
     implementation(libs.voyager.navigator)
+    implementation(libs.ktor.network.tls)
+    implementation(libs.ktor.network.v311)
 
 }

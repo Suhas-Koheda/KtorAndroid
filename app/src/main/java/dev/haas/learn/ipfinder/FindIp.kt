@@ -17,17 +17,21 @@ import java.net.NetworkInterface
 object IpBroadcaster {
 
     fun getLocalIpAddress(): String {
-        return try {
-            NetworkInterface.getNetworkInterfaces()
+        try {
+            val x = NetworkInterface.getNetworkInterfaces()
                 .asSequence()
                 .filter { it.name == "wlan0" || it.name.startsWith("eth") || it.name.startsWith("ap") || it.name == "wlp0s20f3" }
-                .flatMap { it.inetAddresses.asSequence() }
-                .filter { !it.isLoopbackAddress && it.hostAddress?.contains('.') == true }
-                .find { it.isSiteLocalAddress }
-                ?.hostAddress
-                ?: "127.0.0.1"
+                .flatMap { it.interfaceAddresses }
+
+            x.forEach {
+                println(it.broadcast)
+            }
+
+            println(x)
+            return ""
         } catch (ex: Exception) {
             "127.0.0.1"
+            return ""
         }
     }
 
@@ -87,7 +91,5 @@ fun sendUdpBroadcast() {
 }
 
 fun main() {
-    startUdpServer()
-    println("Into the server")
-    readln()
+    println(IpBroadcaster.getLocalIpAddress())
 }

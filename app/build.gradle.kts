@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.haas.learn"
-        minSdk = 24
+        minSdk = 32
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"

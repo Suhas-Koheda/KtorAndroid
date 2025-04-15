@@ -26,8 +26,6 @@ object IpBroadcaster {
             x.forEach {
                 println(it.broadcast)
             }
-
-            println(x)
             return ""
         } catch (ex: Exception) {
             "127.0.0.1"
@@ -35,11 +33,6 @@ object IpBroadcaster {
         }
     }
 
-    fun getBroadcastAddress(): String {
-        val ip = getLocalIpAddress()
-        val parts = ip.split('.')
-        return if (parts.size == 4) "${parts[0]}.${parts[1]}.${parts[2]}.255" else "255.255.255.255"
-    }
 }
 
 fun startUdpServer() {
@@ -91,5 +84,6 @@ fun sendUdpBroadcast() {
 }
 
 fun main() {
-    println(IpBroadcaster.getLocalIpAddress())
+
+    readln()
 }

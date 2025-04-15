@@ -20,6 +20,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.haas.learn.ipfinder.sendUdpBroadcast
+import dev.haas.learn.ipfinder.startUdpServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,7 +44,9 @@ class MainScreen : Screen {
                 add(Manifest.permission.ACCESS_FINE_LOCATION)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                add(Manifest.permission.NEARBY_WIFI_DEVICES)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    add(Manifest.permission.NEARBY_WIFI_DEVICES)
+                }
             }
         }.toTypedArray()
 
@@ -81,6 +84,7 @@ class MainScreen : Screen {
             Button(onClick = {
                 if (hasPermissions()) {
                     CoroutineScope(Dispatchers.IO).launch {
+                        startUdpServer()
                         sendUdpBroadcast()
                     }
                 } else {

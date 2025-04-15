@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp") version "2.1.20-1.0.31"
+    id("kotlin-kapt")
 }
 
 android {
@@ -64,6 +66,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.ktor.server.core)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.client.java)
@@ -72,5 +76,9 @@ dependencies {
     implementation(libs.voyager.navigator)
     implementation(libs.ktor.network.tls)
     implementation(libs.ktor.network.v311)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler.v250)
+    implementation(libs.kotlinx.datetime)
+
 
 }

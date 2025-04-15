@@ -1,6 +1,7 @@
 package dev.haas.learn.navigation
 
 import android.Manifest
+import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Build
 import android.widget.Toast
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import dev.haas.learn.database.NoteViewModel
 import dev.haas.learn.ipfinder.sendUdpBroadcast
 import dev.haas.learn.ipfinder.startUdpServer
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +32,7 @@ class MainScreen : Screen {
     @Composable
     override fun Content() {
         val context = LocalContext.current
-        LocalNavigator.currentOrThrow
+        val navigator = LocalNavigator.currentOrThrow
 
         // List of required permissions
         val requiredPermissions = mutableListOf(
@@ -40,13 +42,9 @@ class MainScreen : Screen {
             Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
             Manifest.permission.ACCESS_NETWORK_STATE
         ).apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                add(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    add(Manifest.permission.NEARBY_WIFI_DEVICES)
-                }
+            add(Manifest.permission.ACCESS_FINE_LOCATION)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                add(Manifest.permission.NEARBY_WIFI_DEVICES)
             }
         }.toTypedArray()
 
@@ -92,6 +90,19 @@ class MainScreen : Screen {
                 }
             }) {
                 Text("Send UDP Broadcast")
+            }
+            Button(onClick = { navigator.push(TextPadScreen()) }) {
+                Text("Go to Text Pad")
+            }
+            val application = LocalContext.current.applicationContext as Application
+            Button(onClick = {
+                navigator.push(
+                    NoteTestScreen(
+                        viewModel = NoteViewModel(application)
+                    )
+                )
+            }) {
+                Text("Go to Notes")
             }
         }
     }

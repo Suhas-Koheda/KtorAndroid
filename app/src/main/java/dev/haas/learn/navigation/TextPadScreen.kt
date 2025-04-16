@@ -39,7 +39,7 @@ class TextPadScreen : Screen {
             Button(
                 onClick = {
                     richTextState.addLink(
-                        text = "",
+                        text = "Ne wtext added",
                         url = "https://github.com/MohamedRejeb/Compose-Rich-Editor"
                     )
                 }
